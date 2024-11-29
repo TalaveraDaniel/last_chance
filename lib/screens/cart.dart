@@ -49,7 +49,7 @@ class _CartPageState extends State<CartPage> {
           },
         ),
         title: const Text(
-          'Cart',
+          'Carrito',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -103,7 +103,7 @@ class _CartPageState extends State<CartPage> {
                   value: '${subtotal.toStringAsFixed(2)} Bs',
                 ),
                 SummaryRow(
-                  label: 'Delivery',
+                  label: 'Envio',
                   value: '${deliveryFee.toStringAsFixed(2)} Bs',
                 ),
                 const SizedBox(height: 8),

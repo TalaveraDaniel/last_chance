@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:last_chance/screens/cart.dart';
-import 'package:last_chance/screens/order_tracking.dart';
+import 'package:last_chance/screens/history.dart';
 import 'package:last_chance/screens/product_creation.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const DeliveryTrackingPage(),
+          builder: (context) => const HistoryPage(),
         ),
       );
     }
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       );
     } else {
       setState(() {
-        _selectedIndex = index; // Update the selected index for other tabs
+        _selectedIndex = 0; // Update the selected index for other tabs
       });
     }
   }
@@ -120,25 +120,118 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 24),
-              // Food Categories
+              Container(
+                width: double.infinity,
+                height: 200,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(
+                      255, 50, 113, 76), // Brand green color
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    // Text Section
+                    Stack(
+                      children: [
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 207,
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.asset(
+                                'assets/images/grocery_bag.png', // Replace with your image path
+                                height: 140,
+                                width: 140,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                '¡Ahorra tu tiempo!\nGeneramos una lista de\ntus compras más frecuentes.',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              ElevatedButton(
+                                onPressed:
+                                    () {}, // Replace with your onPressed logic
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 36, 148, 218),
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 16),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Ver lista',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
               const Text(
-                "¿Qué estas buscando?",
+                'Productos del momento',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 16),
+              // Food Categories
               SizedBox(
-                height: 80,
+                height: 180,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: const [
-                    CategoryItem(label: "Supermercado"),
-                    CategoryItem(label: "Bebidas"),
-                    CategoryItem(label: "Hamburguesas"),
-                    CategoryItem(label: "Pizza"),
-                    CategoryItem(label: "Pollo"),
+                    PromoItem(
+                      title: 'Manzanas',
+                      description: '1kg de manzanas',
+                      image: 'assets/images/manzana.png',
+                      price: '14.00',
+                    ),
+                    PromoItem(
+                      title: 'Pizza Margarita',
+                      description: 'Pizza clasica italiana',
+                      image: 'assets/images/pizza.png',
+                      price: '55.00',
+                    ),
+                    PromoItem(
+                      title: 'Leche Pil',
+                      description: 'Bolsa de leche pil 946 ML',
+                      image: 'assets/images/leche_pil.png',
+                      price: '4.00',
+                    ),
+                    PromoItem(
+                      title: 'Combo crunch',
+                      description: 'Hamburguesa con papas y soda',
+                      image: 'assets/images/combo_hamburguesa.png',
+                      price: '40.00',
+                    ),
                   ],
                 ),
               ),
@@ -148,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Lugares Patrocinados",
+                    "Mayores Descuentos",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -274,28 +367,109 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class CategoryItem extends StatelessWidget {
-  final String label;
+class PromoItem extends StatelessWidget {
+  final String title;
+  final String description;
+  final String image;
+  final String price;
 
-  const CategoryItem({super.key, required this.label});
+  const PromoItem({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.image,
+    required this.price,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 135,
-      margin: const EdgeInsets.only(right: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 50, 113, 76),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Center(
-        child: Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Container(
+        width: 250,
+        margin: const EdgeInsets.only(right: 16),
+        child: Stack(
+          children: [
+            // Main container
+            Container(
+              width: double.infinity,
+              height: 140,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Image.asset(
+                          image,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '$price Bs',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      description,
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Diagonal label
+            Positioned(
+              top: 0,
+              left: 0,
+              child: Transform.rotate(
+                angle:
+                    -0.785398, // Rotates the widget by -45 degrees (in radians)
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  color: Colors.red,
+                  child: const Text(
+                    'Promo',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
